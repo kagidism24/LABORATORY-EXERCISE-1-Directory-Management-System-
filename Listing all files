@@ -1,0 +1,54 @@
+#include <iostream> 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <string>
+
+using namespace std;
+
+
+void listFiles(const string& filter = "", bool isExtension = false) {
+}
+
+void createDirectory() {
+}
+
+void changeDirectory() {
+}
+
+int main() {
+  int choice;
+
+  while (true) {
+    cout << "MAIN MENU\n";
+    cout << "1. Display List of Files\n";
+    cout << "2. Create New Directory\n";
+    cout << "3. Change Working Directory\n";
+    cout << "4. Exit\n";
+    cout << "Enter choice: ";
+    cin >> choice;
+
+    switch (choice) {
+      case 1:
+       
+        break;
+      case 2:
+        createDirectory();
+        break;
+      case 3:
+        changeDirectory();
+        break;
+      case 4:
+        return 0;
+      default:
+        cout << "Invalid choice" << endl;
+    }
+
+    cin.ignore();
+    cout << "Press Enter to continue..." << endl;
+    cin.get();
+  }
+
+  return 0;
+}
