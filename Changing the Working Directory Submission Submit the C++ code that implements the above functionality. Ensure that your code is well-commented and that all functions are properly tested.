@@ -1,0 +1,100 @@
+#include <iostream>
+#include <unistd.h> 
+#include <string>
+
+using namespace std;
+
+void changeDirectory() {
+    char cwd[1024];
+    string dirName;
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        cout << "Current Directory: " << cwd << endl;
+    } else {
+        cerr << "Error: Unable to get current directory." << endl;
+        return;
+    }
+
+    cout << "\nChange Directory" << endl;
+    cout << "1. Step Backward" << endl;
+    cout << "2. Go to Root Directory" << endl;
+    cout << "3. Go to Specific Directory" << endl;
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1: {
+            string path = string(cwd);
+            size_t pos = path.find_last_of('/');
+            if (pos != string::npos) {
+                path = path.substr(0, pos);
+                if (chdir(path.c_str()) == 0) {
+                    cout << "Directory changed successfully to: " << path << endl;
+                } else {
+                    cerr << "Error: Unable to change directory." << endl;
+                }
+            } else {
+                cerr << "Error: Cannot step backward from root." << endl;
+            }
+            break;
+        }
+        case 2: {
+            if (chdir("/") == 0) {
+                cout << "Directory changed successfully to root." << endl;
+            } else {
+                cerr << "Error: Unable to change to root directory." << endl;
+            }
+            break;
+        }
+        case 3: {
+            cout << "Please enter the Directory Name: ";
+            cin >> dirName;
+            if (chdir(dirName.c_str()) == 0) {
+                cout << "Directory changed successfully to: " << dirName << endl;
+            } else {
+                cerr << "Error: Unable to change to directory '" << dirName << "'." << endl;
+            }
+            break;
+        }
+        default:
+            cout << "Invalid choice." << endl;
+    }
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        cout << "Current Directory: " << cwd << endl;
+    } else {
+        cerr << "Error: Unable to get current directory." << endl;
+    }
+}
+
+int main() {
+    int choice;
+
+    while (true) {
+        cout << "\n=== MAIN MENU ===" << endl;
+        cout << "1. Display List of Files (Feature not yet available)" << endl;
+        cout << "2. Create New Directory (Feature not yet available)" << endl;
+        cout << "3. Change Working Directory" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice (1-4): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 3:
+                changeDirectory();
+                break;
+            case 4:
+                cout << "Exiting program. Goodbye!" << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please select a valid option." << endl;
+        }
+
+        cout << "Press Enter to return to the main menu...";
+        cin.ignore();  
+        cin.get();     
+    }
+
+    return 0;
+}
